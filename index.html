@@ -1,20 +1,697 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aşkımızın Hikayesi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bizim Hikayemiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f17;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --text: #f7f4f1;
+      --muted: #cbc6c1;
+      --accent: #ff8fb1;
+      --accent-2: #ffd6e2;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(255,143,177,0.18), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(255,214,226,0.12), transparent 24%),
+        linear-gradient(180deg, #13131d 0%, #0e0f18 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 120px 170px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 220px 90px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 340px 220px, rgba(255,255,255,0.45), transparent);
+      background-size: 380px 260px;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,15,0.20) 0%, rgba(10,10,15,0.55) 100%);
+      z-index: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('IMG-20250213-WA0025.jpg');
+      background-size: cover;
+      background-position: center center;
+      filter: brightness(0.55);
+      transform: scale(1.05);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      padding: 32px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--accent-2);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 7vw, 84px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      font-size: clamp(17px, 2.1vw, 22px);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #ff6f98);
+      color: white;
+      box-shadow: 0 10px 30px rgba(255, 111, 152, 0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      color: white;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+    section {
+      padding: 90px 0;
+    }
+
+    .section-head {
+      margin-bottom: 34px;
+      text-align: center;
+    }
+
+    .section-head span {
+      display: inline-block;
+      color: var(--accent-2);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+    }
+
+    .section-head p {
+      max-width: 680px;
+      margin: 14px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+    }
+
+    .story-box {
+      padding: 32px;
+    }
+
+    .story-box h3 {
+      margin-top: 0;
+      font-size: 26px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .story-box p {
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 16px;
+      margin: 0 0 16px;
+    }
+
+    .stat-box {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      align-content: center;
+    }
+
+    .stat {
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 14px;
+      color: var(--accent-2);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat span {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #fff;
+    }
+
+    .gallery {
+      display: grid;
+      gap: 26px;
+    }
+
+    .memory-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .memory-card:nth-child(even) .memory-media { order: 2; }
+    .memory-card:nth-child(even) .memory-text { order: 1; }
+
+    .memory-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      min-height: 340px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .memory-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .memory-card:hover .memory-media img {
+      transform: scale(1.03);
+    }
+
+    .memory-tag {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(15,15,23,0.64);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .memory-text {
+      padding: 16px 10px 16px 8px;
+    }
+
+    .memory-text h3 {
+      margin: 0 0 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.1;
+    }
+
+    .memory-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .quote-box {
+      padding: 38px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255,143,177,0.12), rgba(255,255,255,0.05));
+    }
+
+    .quote-box h3 {
+      margin: 0 0 14px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+    }
+
+    .quote-box p {
+      margin: 0 auto;
+      max-width: 740px;
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 28px 0 60px;
+      text-align: center;
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 920px) {
+      .story-grid,
+      .memory-card {
+        grid-template-columns: 1fr;
+      }
+
+      .memory-card:nth-child(even) .memory-media,
+      .memory-card:nth-child(even) .memory-text {
+        order: initial;
+      }
+
+      .hero {
+        min-height: 86vh;
+      }
+
+      .memory-media {
+        min-height: 300px;
+      }
+    }
+
+    .music-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: linear-gradient(135deg, var(--accent), #ff6f98);
+      color: white;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(255, 111, 152, 0.35);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .music-toggle:hover {
+      transform: translateY(-2px);
+    }
+
+    #youtubePlayer {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      left: -9999px;
+      top: -9999px;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 20px, 1120px);
+      }
+
+      .music-toggle {
+        right: 14px;
+        bottom: 14px;
+        padding: 12px 15px;
+        font-size: 13px;
+      }
+
+      .hero-content {
+        padding: 16px 0;
+      }
+
+      .story-box,
+      .quote-box,
+      .stat-box {
+        padding: 22px;
+      }
+
+      .memory-card {
+        padding: 14px;
+      }
+
+      section {
+        padding: 70px 0;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header class="hero">
+    <div class="hero-bg"></div>
     <div class="container">
-        <div class="card">
-            <h1>Bu Bizim Hikayemiz</h1>
-            <p>Her anı bir yıldız gibi parlayan bir aşk hikayesi.</p>
-            <button onclick="startStory()">Hikayemize Başla</button>
+      <div class="hero-content fade-up">
+        <div class="eyebrow">✨ Artık burada • bizim hikayemiz</div>
+        <h1>2 Eylül’de başlayan<br>ve gittikçe güzelleşen biz.</h1>
+        <p>
+          Bir gün içinde sıradan gibi duran bir karşılaşma, sonra hayatın en güzel tesadüflerinden biri oldu.
+          Bu sayfa; ilk heyecanın, ilk konuşmaların, özlemin, sarılmaların ve birlikte biriktirdiğimiz güzel anların küçük bir izi.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#hikaye">Hikayemize başla</a>
+          <a class="btn btn-secondary" href="#anilar">Anılarımıza geç</a>
         </div>
+      </div>
     </div>
-    <script src="scripts.js"></script>
+  </header>
+
+  <section id="hikaye">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span>başlangıç</span>
+        <h2>Her şey o gün başladı.</h2>
+        <p>
+          Bazı insanlar hayatına yavaşça girer. Bazılarıysa ilk anda iz bırakır.
+          Sen benim için daha ilk görüşte öyleydin.
+        </p>
+      </div>
+
+      <div class="story-grid">
+        <div class="glass story-box fade-up">
+          <h3>İlk karşılaşma</h3>
+          <p>
+            2 Eylül günü Tesla’da tanıştık. Sen müşteri olarak gelmiştin, ben ise orada çalışıyordum.
+            Dışarıdan bakınca sadece kısa bir karşılaşmaydı belki ama benim içimde öyle olmadı.
+          </p>
+          <p>
+            Seni gördüğüm anda içimde farklı bir şey oluştu. Sonra bir şekilde seni bulmanın yolunu aradım,
+            Instagram’dan istek attım ve konuşmaya başladık. O an başlayan sohbet, zamanla günümün en güzel kısmı oldu.
+          </p>
+          <p>
+            Sonrası zaten kendiliğinden aktı. Mesafeler, yoğunluklar, günler… hiçbiri sana doğru gitme isteğimi azaltmadı.
+            Tam tersine, seni tanıdıkça iyi ki demem daha da büyüdü.
+          </p>
+        </div>
+
+        <div class="glass stat-box fade-up">
+          <div class="stat">
+            <strong>İlk gün</strong>
+            <span>2 Eylül’de başladı her şey. Sıradan bir gün, hiç sıradan olmayan bir hatıraya dönüştü.</span>
+          </div>
+          <div class="stat">
+            <strong>İlk his</strong>
+            <span>Daha ilk karşılaşmada içimde kalan o his, zaman geçtikçe geçmedi; tam aksine daha da netleşti.</span>
+          </div>
+          <div class="stat">
+            <strong>En güzel detay</strong>
+            <span>Daha tanışalı çok kısa süre olmuşken bile sana yakın olmak için yol yapmak bana hiç yük gelmedi.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="anilar">
+    <div class="container">
+      <div class="section-head fade-up">
+        <span>anılar</span>
+        <h2>Birlikte biriken en güzel kareler.</h2>
+        <p>
+          Gösterişli olmaya çalışmayan, tam tersine doğal olduğu için güzel kalan anlar.
+          Tam da bize yakışan şekilde.
+        </p>
+      </div>
+
+      <div class="gallery">
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Kıbrıs • deniz manzarası</span>
+            <img src="IMG-20241119-WA0068.jpg" alt="Kıbrıs'ta birlikte çekilmiş deniz manzaralı fotoğraf" />
+          </div>
+          <div class="memory-text">
+            <h3>İki ay olmuştu ama özlem çoktan büyümüştü.</h3>
+            <p>
+              Daha tanışalı henüz iki ay olmuştu ama ben yine de ta buradan kalkıp Kıbrıs’a geldim.
+              Çünkü bazı insanlar için plan yapılmaz, direkt yola çıkılır. Arkamızdaki deniz ne kadar güzel görünüyorsa,
+              o gün içimdeki huzur da o kadar güzeldi. Bu kare sadece bir fotoğraf değil; “iyi ki geldim” dediğim anlardan biri.
+            </p>
+          </div>
+        </article>
+
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Güneşli bir mola</span>
+            <img src="IMG-20250120-WA0017.jpg" alt="Güneşli bir günde kalp işareti yapan fotoğraf" />
+          </div>
+          <div class="memory-text">
+            <h3>Sen gülünce ortamın ışığı değişiyor.</h3>
+            <p>
+              Belki çok normal bir gün, belki sadece kısa bir kahve molasıydı.
+              Ama sen kalp yapıp öyle gülünce fotoğraf bir anda sıradanlıktan çıktı.
+              Bazen en tatlı anlar özel hazırlanmış anlar olmuyor; kendiliğinden gelen, içten olan küçük anlar oluyor.
+              Ve senin en güzel yanlarından biri de tam olarak bu doğallık.
+            </p>
+          </div>
+        </article>
+
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Bizim klasik halimiz</span>
+            <img src="IMG-20250124-WA0010.jpg" alt="Birlikte sempatik poz verdiğiniz fotoğraf" />
+          </div>
+          <div class="memory-text">
+            <h3>Ciddiyetten çok bize kahkaha yakışıyor.</h3>
+            <p>
+              Tam düzgün fotoğraf çekilecek derken saçma sapan mimikler, komik suratlar ve yine bize ait bir kare.
+              Belki kusursuz değil ama tam bizlik. Zaten en sevdiğim şey de bu;
+              senin yanında hiçbir şeyi kasmak zorunda kalmıyorum. Eğlence de, samimiyet de, huzur da aynı yerde oluyor.
+            </p>
+          </div>
+        </article>
+
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Bir öpücük kadar net</span>
+            <img src="IMG-20250213-WA0022.jpg" alt="Yanağa öpücük fotoğrafı" />
+          </div>
+          <div class="memory-text">
+            <h3>Bazı mutlulukların açıklamaya ihtiyacı yok.</h3>
+            <p>
+              Bu fotoğrafa bakınca uzun cümleler kurmaya gerek kalmıyor.
+              Her şey çok net görünüyor: sevgi, huzur ve o anın sıcaklığı.
+              Hayat bazen karışık olabilir ama senin yanındayken bazı şeyler fazla basit geliyor;
+              yanında olmak, iyi hissetmek ve o anı hafızaya kazımak gibi.
+            </p>
+          </div>
+        </article>
+
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Bu kez sıra sende</span>
+            <img src="IMG-20250213-WA0023.jpg" alt="Bu kez senin onu öptüğün fotoğraf" />
+          </div>
+          <div class="memory-text">
+            <h3>Sevilmek de en az sevmek kadar güzel.</h3>
+            <p>
+              Bu kareyi seviyorum çünkü sadece tatlı değil, aynı zamanda çok gerçek.
+              İçinde gösteriş yok, rol yok, zorlama yok. Sadece biz varız.
+              Birbirine yaklaşan iki insan değil; çoktan birbirine alışmış, birbirinin yanında evinde gibi hisseden iki kalp var.
+            </p>
+          </div>
+        </article>
+
+        <article class="glass memory-card fade-up">
+          <div class="memory-media">
+            <span class="memory-tag">Çiçekler ve biz</span>
+            <img src="IMG-20250213-WA0025.jpg" alt="Birlikte çiçeklerle çekilmiş fotoğraf" />
+          </div>
+          <div class="memory-text">
+            <h3>Sana yakışan şeylerden biri de mutlu görünmek.</h3>
+            <p>
+              Bu fotoğrafta çiçekler güzel olabilir ama asıl güzel olan şey yüzündeki ifade.
+              Çünkü ben senin mutlu halini görmeyi gerçekten seviyorum.
+              Belki her günü kusursuz yapamam ama elimden geldiğince yüzünde böyle bir gülümseme bırakmak istiyorum.
+              Bu kare de o isteğin küçük ama çok sevdiğim bir kanıtı gibi.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="glass quote-box fade-up">
+        <h3>Bu daha başlangıç.</h3>
+        <p>
+          Burada birkaç fotoğraf, birkaç cümle ve birkaç anı var.
+          Ama aslında bunların altında çok daha büyük bir şey yatıyor:
+          birlikte güzel hissettiren, doğal ilerleyen, zorlamadan büyüyen bir hikâye.
+          Ve ben bu hikâyenin daha nice sayfasını seninle doldurmak istiyorum.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <button class="music-toggle" id="musicToggle" aria-label="Müziği başlat veya durdur">
+    🎵 Şarkıyı başlat
+  </button>
+
+  <div id="youtubePlayer" aria-hidden="true"></div>
+
+  <div class="footer container">
+    bizim hikayemiz • seninle daha güzel
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    const musicToggle = document.getElementById('musicToggle');
+    const youtubePlayer = document.getElementById('youtubePlayer');
+    let musicStarted = false;
+    let musicPlaying = false;
+
+    function startMusic() {
+      if (!musicStarted) {
+        youtubePlayer.innerHTML = `
+          <iframe
+            width="1"
+            height="1"
+            src="https://www.youtube.com/embed/UmQPiX2oI7Q?autoplay=1&loop=1&playlist=UmQPiX2oI7Q&controls=0&modestbranding=1&rel=0"
+            title="Arka plan müziği"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        `;
+        musicStarted = true;
+      }
+
+      musicPlaying = true;
+      musicToggle.textContent = '⏸️ Müziği kapat';
+    }
+
+    function stopMusic() {
+      youtubePlayer.innerHTML = '';
+      musicStarted = false;
+      musicPlaying = false;
+      musicToggle.textContent = '🎵 Şarkıyı başlat';
+    }
+
+    musicToggle.addEventListener('click', () => {
+      if (musicPlaying) {
+        stopMusic();
+      } else {
+        startMusic();
+      }
+    });
+  </script>
 </body>
 </html>
