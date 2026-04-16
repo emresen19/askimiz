@@ -41,12 +41,10 @@ function stopMusic() {
   musicToggle.textContent = '🎵 Şarkıyı başlat';
 }
 
-if (musicToggle) {
-  musicToggle.addEventListener('click', () => {
-    if (musicPlaying) {
-      stopMusic();
-    } else {
-      startMusic();
-    }
-  });
-}
+musicToggle.addEventListener('click', () => {
+  if (musicPlaying) {
+    stopMusic();
+  } else {
+    startMusic();
+  }
+});

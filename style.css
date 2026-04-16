@@ -11,6 +11,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -278,36 +279,15 @@ section {
   transform: scale(1.03);
 }
 
-.memory-tag {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(15,15,23,0.64);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  backdrop-filter: blur(10px);
-}
-
 .memory-text {
-  padding: 16px 10px 16px 8px;
-}
-
-.memory-text h3 {
-  margin: 0 0 12px;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 4vw, 38px);
-  line-height: 1.1;
+  padding: 10px 10px 10px 8px;
 }
 
 .memory-text p {
   margin: 0;
   color: var(--muted);
   font-size: 16px;
-  line-height: 1.9;
+  line-height: 1.95;
 }
 
 .quote-box {
